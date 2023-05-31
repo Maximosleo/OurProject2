@@ -182,23 +182,19 @@
                 return false;
             }
 
-           
-
-            
-            else if (identification =='') {
-                document.getElementById('identification error').innerHTML = "identification contains simboles";
-                document.getElementById('identification error').style.display = 'inline';
+            else if ($('input[name="gender"]:checked').length == 0){
                 return false;
             }
-
-            else if ($('input[name="gender"]:checked').length == 0){
+            ///itay code
+            else if (identification == '') {
+                document.getElementById('identification error').innerHTML = "identification contains simboles";
+                document.getElementById('identification error').style.display = 'inline';
                 return false;
             }
 
             //else if (checkcheckbox() == false) {
             //    return false;
             //}
-
 
 
             //else if (checkcheckradio() == false) {
@@ -221,7 +217,7 @@
            }
             
         }
-
+        /////itay code
         function CheckCheckBox() {
             flag = false
             atractions = document.getElementsByName("CONPENY CAR")
@@ -232,7 +228,7 @@
             }
             return flag
         }
-
+        ////itay code
         function CheckCheckradio() {
             flag = false
             atractions = document.getElementsByName("gender")
@@ -244,7 +240,7 @@
             return flag
         }
 
-
+       // kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 
 
         function isValidEmail(email) {
