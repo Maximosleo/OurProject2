@@ -1,0 +1,257 @@
+﻿@page
+@model OurProject2.Pages.SignUpModel
+@{
+}
+<h2>Sign Up</h2>
+@*<table> <tr> </tr></table>
+ <td> </td>*@
+
+<form id="signupForm" action="javascript:void(0);">
+    <table>
+        <tr>
+            <td> FIRST NAME:</td>
+            <td>
+            <input type="text" id="firstname" placeholder="first name"/> 
+            </td>
+          
+        </tr>
+        <tr>
+            <td> LAST NAME :</td>
+        <td>
+    <input type="text" id="lastname" placeholder="last name" /><br />
+    </td>
+        </tr>
+
+        <tr>
+   <td> EMAIL:</td>
+   <td> <input type="text" id="email" placeholder="email" /><br /></td>
+            </tr>
+
+            <tr>
+   <td> PASSWORD:</td>
+   <td> <input type="text" id="password" placeholder="password" /><br /></td>
+    </tr>
+
+    <tr>
+    <td> AGE:</td>
+   <td> <input type="text" id="age" placeholder="age" /><br /></td>
+    </tr>
+    <tr>
+   <td>  identification:</td>
+    <td><input type="text" id="identification" placeholder="identification" /><br /></td>
+    <td>  <p style="display: none; color: red" id="identification error"></p></td>
+    </tr>
+    
+    
+    <tr>
+    <td>
+    <br /> <h5> <label> Gender: </label><br /></h5>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="gender">Male</label><br>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="gender">Female</label><br>
+    </td>
+        </tr>
+
+    <tr>
+        <td>
+            <br />
+        </td>
+    </tr>
+
+        <tr>
+     <td>
+        <h5> <label> Where Are You Living By Areas </label><br /></h5>
+        <select id="living area">
+        <option value="living in israel 1">LEIVING AREA IN ISRAEL</option>
+        <option>CENTER OF THE ISRAEL</option>
+        <option >NORTH OF ISRAEL</option>
+        <option>SOUTH OF ISRAEL</option>
+        <option>EAST OF ISRAEL</option>
+        <option>WEST OF THE ISRAEL</option>
+    </select>
+
+    </td>
+            <td>  <p style="display: none; color: red" id="AreaErorr"></p> </td>
+           
+        </tr>
+
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
+   
+        <tr>
+     <td>
+                <h5> <label> Favourite Compeny Car </label><br /></h5>
+                <input type="checkbox" id="MERZADEZ BENZ" name=" COMPNEY CAR" value="MERZADEZ BENZ "/>
+    <label for="CONPENY CAR">MERZADEZ BENZ</label><br>
+    <input type="checkbox" id="AUDI" name=" COMPNEY CAR" value="AUDI " />
+    <label for="CONPENY CAR">AUDI</label><br>
+    <input type="checkbox" id="BMW" name=" COMPNEY CAR" value="BMW" />
+    <label for="CONPENY CAR">BMW</label><br>
+    <input type="checkbox" id="TOYOTA" name=" COMPNEY CAR" value="TOYOTA" />
+    <label for="CONPENY CAR">TOYOTA</label><br>
+    </td>
+        </tr>
+
+        <tr>
+            <td>
+                <br />
+            </td>
+        </tr>
+
+        <tr>
+        <td>
+        <button type="submit">Sign Up</button>
+        </td>
+        </tr>
+<tr>
+    <td>
+    <p id="responseLabel"></p>
+    </td>
+</tr>
+ </table>
+</form>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('submit', '#signupForm', function (event) {
+
+                var isCorrect = isInputCorrect($("#firstname").val(),  $("#lastname").val(),    $("#email").val(),
+                    $("#password").val(), $("#gender").val(), $("#age").val(), $("#identification").val());
+
+                console.log(' isCorrect:', isCorrect);
+
+                if (isCorrect == true) {
+                    event.preventDefault();
+
+                    $.get("/SignUp?firstname=" + $("#firstname").val() + "&lastname=" +
+                    $("#lastname").val() + "&email=" + $("#email").val()
+                        + "&password=" + $("#password").val() + "&gender=" + $("#gender").val() +
+                        "&age=" + $("#age").val() + "&identification=" + $("identification"),
+                        function (data) {
+                            console.log(' response object:', data);
+                            $("#responseLabel").text(data);
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Error:', textStatus, errorThrown);
+                        });
+                }
+                else{
+                    alert("shit input11")
+                }
+                
+                    
+                return false;
+            });
+        });
+
+        function isInputCorrect(firstname, lastname, email, password, gender, age, identification) {
+
+            
+
+            if (firstname == "" ){
+             
+                return false;
+            }
+
+            else if ( lastname ==""){
+                return false;
+            }
+
+
+            else if (email == ""){
+                return false;
+            }
+            else if (isValidEmail(email) ==false ) {
+                return false;
+            }
+            else if  (email.indexOf('@@') < 2) {
+                return false;
+            }
+
+            else if ( password ==""){
+                return false;
+            }
+
+            else if ( age ==""){
+                return false;
+            }
+
+           
+
+            
+            else if (identification =='') {
+                document.getElementById('identification error').innerHTML = "identification contains simboles";
+                document.getElementById('identification error').style.display = 'inline';
+                return false;
+            }
+
+            else if ($('input[name="gender"]:checked').length == 0){
+                return false;
+            }
+
+            //else if (checkcheckbox() == false) {
+            //    return false;
+            //}
+
+
+
+            //else if (checkcheckradio() == false) {
+            //    return false;
+            ////}
+
+            //else if (document.getelementbyid('living area').val() = 'living in israel 1') {
+            //    return false;
+            //}
+
+            //if $('living area').value == "living in israel 1") {
+            //    document.getElementById("AreaErorr").innerHTML = "חובה למלא אזור במדינה";
+            //    document.getElementById("AreaErorr").style.display = 'inline';
+            //    return false;
+            //}
+
+
+            else {
+               return true;
+           }
+            
+        }
+
+        function CheckCheckBox() {
+            flag = false
+            atractions = document.getElementsByName("CONPENY CAR")
+            for (i = 0; i < atractions.length; i++) {
+                if (atractions[i].checked == true) {
+                    flag = true
+                }
+            }
+            return flag
+        }
+
+        function CheckCheckradio() {
+            flag = false
+            atractions = document.getElementsByName("gender")
+            for (i = 0; i < atractions.length; i++) {
+                if (atractions[i].checked == true) {
+                    flag = true
+                }
+            }
+            return flag
+        }
+
+
+
+
+        function isValidEmail(email) {
+            return email.includes('@@');
+            return email.includes('.');
+        }
+
+    </script>
+}
+

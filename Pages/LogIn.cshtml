@@ -1,0 +1,71 @@
+﻿@page
+@model OurProject2.Pages.LogInModel
+@{
+}
+<h2>Log In </h2>
+
+<form id="loginForm" action="javascript:void(0);">
+    <input type="text" id="email" placeholder="email" /><br />
+    <input type="text" id="password" placeholder="password" /><br />
+    <button type="submit">Log In</button>
+    <p id="responseLabel"></p>
+</form>
+
+
+
+
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('submit', '#loginForm', function (event) {
+
+                var isCorrect = isInputCorrect($("#email").val(),
+                    $("#password").val());
+
+                console.log(' isCorrect:', isCorrect);
+
+
+                if (isCorrect == true) {
+                    event.preventDefault();
+
+                    $.get("/LogIn?email=" + $("#email").val() + "&password=" +
+                        $("#password").val(),
+                        function (data) {
+                            console.log(' response object:', data);
+                            $("#responseLabel").text(data);
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            console.error('Error:', textStatus, errorThrown);
+                        });
+                }
+                else {
+                    alert("shit input111")
+                }
+
+
+                return false;
+            });
+        });
+
+        function isInputCorrect(email, password) {
+            if (email == "") {
+                return false;
+            }
+
+            else if (password == "") {
+                return false;
+            }
+
+            else {
+                return true;
+            }
+
+        }
+
+    </script>
+}
+
+
+

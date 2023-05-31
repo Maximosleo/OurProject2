@@ -1,0 +1,92 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>אתר בגרות</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link rel="stylesheet" type="text/css" href="css.css">
+    <style>
+        table.formTable {
+            width:auto;
+            height: 0%;
+            background-color: white;
+            text-align: right;
+        }
+
+        a.adminLink:link {
+            color: red;
+        }
+
+        a.adminLink:visited {
+            color: red;
+        }
+
+        a.adminLink:hover {
+            font-weight: bold;
+            color: darkred;
+        }
+    </style>
+</head>
+<body onload="startTime()">
+    <table border="1" cellpadding="5" cellspacing="0">
+        <script>
+            function startTime() {
+                const today = new Date();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                currentDate = today.getDate() +"/"+(today.getMonth()+1)+"/"+today.getFullYear()
+                document.getElementById('timedate').innerHTML = h + ":" + m + ":" + s+" | "+currentDate;
+                setTimeout(startTime, 1000);
+            }
+
+            function checkTime(i) {
+                if (i < 10) { i = "0" + i }; 
+                return i;
+            }
+        </script>
+        <tr>
+            <td align="center">
+                <h1>אתר בגרות</h1>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <center>
+                    <a href="Main.aspx">דף הבית</a>
+                    | <a href="Info.aspx">אודות האתר</a>
+                    <%=dynamicLinks %>
+                    <%=logOutBtn %>
+                </center>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">
+                <div>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="float: right">
+                    מספר כניסות: <%=counter %>
+                </div>
+                <center><div id="timedate" style="float:left">
+                    time
+                </div></center>
+                <center><div style="align-self:center">
+                    להשארת ביקורת על האתר: <a href="mailto:itayles2006@gmail.com">איתי לשם</a>
+                </div>
+                </center>
+                </td>
+        </tr>
+    </table>
+</body>
+</html>
