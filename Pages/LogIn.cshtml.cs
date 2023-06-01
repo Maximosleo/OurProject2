@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Data.OleDb;
 using System.Reflection;
 using System.IO;
+using System.Data;
 
 namespace OurProject2.Pages
 {
@@ -23,7 +24,7 @@ namespace OurProject2.Pages
             {
 
 
-   //             UpdateAccess(email, password);
+                UpdateAccess(email, password);
 
                 Console.WriteLine("email : " + email);
                 Console.WriteLine("password : " + password);
@@ -38,36 +39,14 @@ namespace OurProject2.Pages
 
         private void UpdateAccess(string email, string password)
         {
-            //// Path to your access database file. Update if your database is located somewhere else.
-            //string databasePath = Path.Combine(Directory.GetCurrentDirectory(), "Database1.mdb");
-            //string connectionString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={databasePath}";
 
 
-            //using (OleDbConnection conn = new OleDbConnection(connectionString))
-            //{
-            //    conn.Open();
+            DataTable dataTable = GlobalDataTable.Instance.DataTable;
 
-            //    using (OleDbCommand cmd = new OleDbCommand("INSERT INTO table0 (Email, Password) VALUES (11, 22)", conn))
-            //    {
-            //        cmd.Parameters.AddWithValue("@Email", email);
-            //        cmd.Parameters.AddWithValue("@Password", password);
-            //        cmd.ExecuteNonQuery();
-            //    }
-            //}
-
-
-            //string fileName = "Database1.mdb";   //שם הקובץ
-            //string path = HttpContext.Current.Server.MapPath("App_Data/");//מיקום מסד בפורוייקט
-            //path += fileName;
-            //string connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data source=" + path;//נתוני ההתחברות הכוללים מיקום וסוג המסד
-            //OleDbConnection conn = new OleDbConnection(connString);
-
-            //string tableName = "users"; //שם הטבלה
-
-            //   MyAdoHelper conn = new MyAdoHelper();
-           // OleDbConnection oleDbConnection = _myAdoHelper.ConnectToDb("tabel0");
-
-            //     conn.ConnectToDb("tabel0");
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Console.WriteLine($"ID: {row["ID"]}, Name: {row["Name"]}");
+            }
         }
 }
 }

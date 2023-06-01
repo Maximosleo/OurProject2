@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
+using System.Data;
 
 namespace OurProject2.Pages
 {
@@ -35,12 +36,20 @@ namespace OurProject2.Pages
                 Console.WriteLine("gender : " + gender);
                 Console.WriteLine("age : " + age);
 
+                SaveToDB(firstname, lastname, email, password, gender, age);
+
                 return Content("pass the zaza");
             }
             else
             {
                 return Page();
             }
+        }
+
+        private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age)
+        {
+            DataTable dataTable = GlobalDataTable.Instance.DataTable;
+            dataTable.Rows.Add(1, firstname);
         }
     }
 }
