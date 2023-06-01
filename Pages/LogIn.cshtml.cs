@@ -19,15 +19,15 @@ namespace OurProject2.Pages
         }
         public IActionResult OnGet(string email, string password)
         {
-            
+
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
 
 
                 UpdateAccess(email, password);
 
-                Console.WriteLine("email : " + email);
-                Console.WriteLine("password : " + password);
+                //Console.WriteLine("email : " + email);
+                //Console.WriteLine("password : " + password);
 
                 return Content("pass the zaza");
             }
@@ -40,13 +40,14 @@ namespace OurProject2.Pages
         private void UpdateAccess(string email, string password)
         {
 
+            var tableJson = _cache.GetOrCreate("DB", entry => "");
+            GlobalDataTable globalDataTable = GlobalDataTable.DeserializeFromJson(tableJson);
 
-            DataTable dataTable = GlobalDataTable.Instance.DataTable;
-
-            foreach (DataRow row in dataTable.Rows)
+            DataTableData dataTableData = globalDataTable.DataTableData;
+            foreach (var rowData in dataTableData.Rows)
             {
-                Console.WriteLine($"ID: {row["ID"]}, Name: {row["Name"]}");
+                Console.WriteLine($"ID: {rowData.ID}, Name: {rowData.Name}");
             }
         }
-}
+    }
 }

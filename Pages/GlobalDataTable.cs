@@ -1,18 +1,31 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 
 namespace OurProject2.Pages
 {
+    public class DataTableData
+    {
+        public List<RowData> Rows { get; set; }
+    }
+
+    public class RowData
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+
     public class GlobalDataTable
     {
         private static readonly GlobalDataTable instance = new GlobalDataTable();
 
-        private DataTable dataTable;
+        private DataTableData dataTableData;
 
         private GlobalDataTable()
         {
-            dataTable = new DataTable();
-            dataTable.Columns.Add("ID", typeof(int));
-            dataTable.Columns.Add("Name", typeof(string));
+            dataTableData = new DataTableData
+            {
+                Rows = new List<RowData>()
+            };
         }
 
         public static GlobalDataTable Instance
@@ -20,9 +33,31 @@ namespace OurProject2.Pages
             get { return instance; }
         }
 
-        public DataTable DataTable
+        public DataTableData DataTableData
         {
-            get { return dataTable; }
+            get { return dataTableData; }
+        }
+
+        public string SerializeToJson()
+        {
+            return JsonSerializer.Serialize(this.dataTableData);
+        }
+
+        public static GlobalDataTable DeserializeFromJson(string json)
+        {
+            try
+            {
+                DataTableData dataTableData = JsonSerializer.Deserialize<DataTableData>(json);
+                GlobalDataTable globalDataTable = new GlobalDataTable
+                {
+                    dataTableData = dataTableData
+                };
+                return globalDataTable;
+            }
+            catch (Exception ex)
+            {
+                return instance;
+            }
         }
     }
 }

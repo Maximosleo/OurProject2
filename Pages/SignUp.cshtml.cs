@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using System.Data;
+using System.Diagnostics.Metrics;
 
 namespace OurProject2.Pages
 {
@@ -29,12 +30,12 @@ namespace OurProject2.Pages
                               _cache.Set(counter + "", session + "");*/
 
                 // Log inputs
-                Console.WriteLine("First name : " + firstname);
-                Console.WriteLine("Last Name : " + lastname);
-                Console.WriteLine("email : " + email);
-                Console.WriteLine("password : " + password);
-                Console.WriteLine("gender : " + gender);
-                Console.WriteLine("age : " + age);
+                //Console.WriteLine("First name : " + firstname);
+                //Console.WriteLine("Last Name : " + lastname);
+                //Console.WriteLine("email : " + email);
+                //Console.WriteLine("password : " + password);
+                //Console.WriteLine("gender : " + gender);
+                //Console.WriteLine("age : " + age);
 
                 SaveToDB(firstname, lastname, email, password, gender, age);
 
@@ -48,8 +49,14 @@ namespace OurProject2.Pages
 
         private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age)
         {
-            DataTable dataTable = GlobalDataTable.Instance.DataTable;
-            dataTable.Rows.Add(1, firstname);
+            var tableJson = _cache.GetOrCreate("DB", entry => "");
+            GlobalDataTable globalDataTable = GlobalDataTable.DeserializeFromJson(tableJson);
+
+            DataTableData dataTableData = globalDataTable.DataTableData;
+            dataTableData.Rows.Add(new RowData { ID = 1, Name = firstname });
+
+            var tJson = globalDataTable.SerializeToJson();
+            _cache.Set("DB", tJson);
         }
     }
 }
