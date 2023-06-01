@@ -101,6 +101,15 @@
                 <br />
             </td>
         </tr>
+        <tr>
+            <td>
+@*                <br /> <h5> <label>Menger /User? : </label><br /></h5>
+                <input type="radio" id="Manger" name="" value="male">
+                <label for="gender">Male</label><br>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="gender">Female</label><br>*@
+            </td>
+        </tr>
 
         <tr>
         <td>
@@ -121,8 +130,8 @@
         $(document).ready(function () {
             $(document).on('submit', '#signupForm', function (event) {
 
-                var isCorrect = isInputCorrect($("#firstname").val(),  $("#lastname").val(),    $("#email").val(),
-                    $("#password").val(), $("#gender").val(), $("#age").val(), $("#identification").val());
+                var isCorrect = isInputCorrect($("#firstname").val(), $("#lastname").val(), $("#email").val(),
+                    $("#password").val(), $('input[name="gender"]:checked').val(), $("#age").val(), $("#identification").val());
 
                 console.log(' isCorrect:', isCorrect);
 
@@ -132,7 +141,7 @@
                     $.get("/SignUp?firstname=" + $("#firstname").val() + "&lastname=" +
                     $("#lastname").val() + "&email=" + $("#email").val()
                         + "&password=" + $("#password").val() + "&gender=" + $("#gender").val() +
-                        "&age=" + $("#age").val() + "&identification=" + $("identification"),
+                        "&age=" + $("#age").val() + "&identification=" + $("#identification").val(),
                         function (data) {
                             console.log(' response object:', data);
                             $("#responseLabel").text(data);
@@ -185,7 +194,7 @@
             else if ($('input[name="gender"]:checked').length == 0){
                 return false;
             }
-            ///itay code
+           
             else if (identification == '') {
                 document.getElementById('identification error').innerHTML = "identification contains simboles";
                 document.getElementById('identification error').style.display = 'inline';

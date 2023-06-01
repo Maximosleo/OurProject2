@@ -10,8 +10,19 @@ namespace OurProject2.Pages
 
     public class RowData
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
         public string Name { get; set; }
+
+        public string lastname { get; set; }
+
+        public string email { get; set; }
+
+        public string password { get; set; }
+        
+
+        public string gender { get; set; }
+
+        public string age { get; set; }
     }
 
     public class GlobalDataTable
