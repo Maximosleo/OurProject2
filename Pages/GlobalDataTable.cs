@@ -23,6 +23,8 @@ namespace OurProject2.Pages
         public string gender { get; set; }
 
         public string age { get; set; }
+
+        public string admin_user { get; set; }
     }
 
     public class GlobalDataTable

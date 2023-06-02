@@ -14,7 +14,7 @@ namespace OurProject2.Pages
         {
             _cache = cache;
         }
-        public IActionResult OnGet(string firstname, string lastname, string email, string password, string gender, string age,string identification)
+        public IActionResult OnGet(string firstname, string lastname, string email, string password, string gender, string age,string identification, string admin_user)
         {
 
 
@@ -37,7 +37,7 @@ namespace OurProject2.Pages
                 //Console.WriteLine("gender : " + gender);
                 //Console.WriteLine("age : " + age);
 
-                SaveToDB(firstname, lastname, email, password, gender, age, identification);
+                SaveToDB(firstname, lastname, email, password, gender, age, identification, admin_user);
 
                 return Content("pass the zaza");
             }
@@ -47,13 +47,13 @@ namespace OurProject2.Pages
             }
         }
 
-        private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification)
+        private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification, string admin_user)
         {
             var tableJson = _cache.GetOrCreate("DB", entry => "");
             GlobalDataTable globalDataTable = GlobalDataTable.DeserializeFromJson(tableJson);
 
             DataTableData dataTableData = globalDataTable.DataTableData;
-            dataTableData.Rows.Add(new RowData { ID = identification, Name = firstname, lastname = lastname, email = email, password = password, gender = gender, age = age });
+            dataTableData.Rows.Add(new RowData { ID = identification, Name = firstname, lastname = lastname, email = email, password = password, gender = gender, age = age, admin_user = admin_user });
 
             var tJson = globalDataTable.SerializeToJson();
             _cache.Set("DB", tJson);

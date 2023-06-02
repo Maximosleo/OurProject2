@@ -7,20 +7,34 @@
  <td> </td>*@
 
 <form id="signupForm" action="javascript:void(0);">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <!-- Your form goes here -->
+
+                <tr>
+                    <td> FIRST NAME:</td>
+                    <td>
+                        <input type="text" id="firstname" placeholder="first name" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> LAST NAME :</td>
+                    <td>
+                        <input type="text" id="lastname" placeholder="last name" /><br />
+                    </td>
+                </tr>
+            </div>
+            <div class="col-sm">
+                <!-- The other half of your view goes here -->
+            </div>
+        </div>
+    </div>
+
     <table>
-        <tr>
-            <td> FIRST NAME:</td>
-            <td>
-            <input type="text" id="firstname" placeholder="first name"/> 
-            </td>
-          
-        </tr>
-        <tr>
-            <td> LAST NAME :</td>
-        <td>
-    <input type="text" id="lastname" placeholder="last name" /><br />
-    </td>
-        </tr>
+   
 
         <tr>
    <td> EMAIL:</td>
@@ -53,12 +67,7 @@
     </td>
         </tr>
 
-    <tr>
-        <td>
-            <br />
-        </td>
-    </tr>
-
+    
         <tr>
      <td>
         <h5> <label> Where Are You Living By Areas </label><br /></h5>
@@ -76,12 +85,7 @@
            
         </tr>
 
-        <tr>
-            <td>
-                <br />
-            </td>
-        </tr>
-   
+      
         <tr>
      <td>
                 <h5> <label> Favourite Compeny Car </label><br /></h5>
@@ -98,16 +102,11 @@
 
         <tr>
             <td>
-                <br />
-            </td>
-        </tr>
-        <tr>
-            <td>
-@*                <br /> <h5> <label>Menger /User? : </label><br /></h5>
-                <input type="radio" id="Manger" name="" value="male">
-                <label for="gender">Male</label><br>
-                <input type="radio" id="female" name="gender" value="female">
-                <label for="gender">Female</label><br>*@
+                <br /> <h5> <label> Admin/User?: </label><br /></h5>
+                <input type="radio" id="admin" name="admin_user" value="admin">
+                <label for="admin_user">Admin</label><br>
+                <input type="radio" id="user" name="admin_user" value="user">
+                <label for="admin_user">User</label><br>
             </td>
         </tr>
 
@@ -140,8 +139,8 @@
 
                     $.get("/SignUp?firstname=" + $("#firstname").val() + "&lastname=" +
                     $("#lastname").val() + "&email=" + $("#email").val()
-                        + "&password=" + $("#password").val() + "&gender=" + $("#gender").val() +
-                        "&age=" + $("#age").val() + "&identification=" + $("#identification").val(),
+                        + "&password=" + $("#password").val() + "&gender=" + $('input[name="gender"]:checked').val() +
+                        "&age=" + $("#age").val() + "&identification=" + $("#identification").val() + "&admin_user=" + $('input[name="admin_user"]:checked').val(),
                         function (data) {
                             console.log(' response object:', data);
                             $("#responseLabel").text(data);
