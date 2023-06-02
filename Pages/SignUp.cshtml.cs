@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using System.Data;
 using System.Diagnostics.Metrics;
+using System.Text.Json;
 
 namespace OurProject2.Pages
 {
@@ -37,9 +38,29 @@ namespace OurProject2.Pages
                 //Console.WriteLine("gender : " + gender);
                 //Console.WriteLine("age : " + age);
 
-                SaveToDB(firstname, lastname, email, password, gender, age, identification, admin_user);
+                bool isAdmin;
+                if (admin_user == "admin")
+                {
+                    isAdmin = true;
+                }
+                else
+                {
+                    isAdmin = false;
+                }
+               
 
-                return Content("pass the zaza");
+                SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin);
+
+                    // Create a new anonymous object for your JSON response
+                var jsonResponse = new { isAdmin1 = isAdmin, message = "Operation successful" };
+
+                var obj = new { isAdmin = true, message = "Operation successful" };
+                string json = JsonSerializer.Serialize(obj);
+
+             //         return new JsonResult(json);
+
+
+                return Content(jsonResponse.ToString());
             }
             else
             {
@@ -47,13 +68,13 @@ namespace OurProject2.Pages
             }
         }
 
-        private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification, string admin_user)
+        private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification, bool isAdmin)
         {
             var tableJson = _cache.GetOrCreate("DB", entry => "");
             GlobalDataTable globalDataTable = GlobalDataTable.DeserializeFromJson(tableJson);
 
             DataTableData dataTableData = globalDataTable.DataTableData;
-            dataTableData.Rows.Add(new RowData { ID = identification, Name = firstname, lastname = lastname, email = email, password = password, gender = gender, age = age, admin_user = admin_user });
+            dataTableData.Rows.Add(new RowData { ID = identification, Name = firstname, lastname = lastname, email = email, password = password, gender = gender, age = age, isAdmin = isAdmin });
 
             var tJson = globalDataTable.SerializeToJson();
             _cache.Set("DB", tJson);

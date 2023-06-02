@@ -24,7 +24,7 @@ namespace OurProject2.Pages
 
         public string age { get; set; }
 
-        public string admin_user { get; set; }
+        public bool isAdmin { get; set; }
     }
 
     public class GlobalDataTable

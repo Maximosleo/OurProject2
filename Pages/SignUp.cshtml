@@ -16,14 +16,13 @@
                 <tr>
                     <td> FIRST NAME:</td>
                     <td>
-                        <input type="text" id="firstname" placeholder="first name" />
+                        <input type="text" id="firstname" placeholder="first name" value="Default " />
                     </td>
-
                 </tr>
                 <tr>
                     <td> LAST NAME :</td>
                     <td>
-                        <input type="text" id="lastname" placeholder="last name" /><br />
+                        <input type="text" id="lastname" placeholder="last name" value="Default First Name" /><br />
                     </td>
                 </tr>
             </div>
@@ -38,21 +37,21 @@
 
         <tr>
    <td> EMAIL:</td>
-   <td> <input type="text" id="email" placeholder="email" /><br /></td>
+            <td> <input type="text" id="email" placeholder="email" value="ll@@. " /><br /></td>
             </tr>
 
             <tr>
    <td> PASSWORD:</td>
-   <td> <input type="text" id="password" placeholder="password" /><br /></td>
+            <td> <input type="text" id="password" placeholder="password" value="Default First Name" /><br /></td>
     </tr>
 
     <tr>
     <td> AGE:</td>
-   <td> <input type="text" id="age" placeholder="age" /><br /></td>
+            <td> <input type="text" id="age" placeholder="age" value=" 0000" /><br /></td>
     </tr>
     <tr>
    <td>  identification:</td>
-    <td><input type="text" id="identification" placeholder="identification" /><br /></td>
+            <td><input type="text" id="identification" placeholder="identification" value="09876543" /><br /></td>
     <td>  <p style="display: none; color: red" id="identification error"></p></td>
     </tr>
     
@@ -99,7 +98,6 @@
     <label for="CONPENY CAR">TOYOTA</label><br>
     </td>
         </tr>
-
         <tr>
             <td>
                 <br /> <h5> <label> Admin/User?: </label><br /></h5>
@@ -109,7 +107,6 @@
                 <label for="admin_user">User</label><br>
             </td>
         </tr>
-
         <tr>
         <td>
         <button type="submit">Sign Up</button>
@@ -142,8 +139,24 @@
                         + "&password=" + $("#password").val() + "&gender=" + $('input[name="gender"]:checked').val() +
                         "&age=" + $("#age").val() + "&identification=" + $("#identification").val() + "&admin_user=" + $('input[name="admin_user"]:checked').val(),
                         function (data) {
-                            console.log(' response object:', data);
-                            $("#responseLabel").text(data);
+                            //console.log(' response object:', data);
+                            //$("#responseLabel").text(data);
+
+                            //// read from the json
+                            //console.log(data.isAdmin);
+
+                            //console.log('response object:', data);
+                            //$("#responseLabel").text(data.message);
+                            //console.log(data.isAdmin);  // access 'isAdmin' property
+
+                            var jsonData = JSON.parse(data);
+                            console.log('Parsed JSON:', jsonData);
+                            console.log('isAdmin:', jsonData.isAdmin1);  // Access 'isAdmin' property
+                            console.log('message:', jsonData.message);
+
+                            $("#responseLabel").text(data.message);
+
+
                         })
                         .fail(function (jqXHR, textStatus, errorThrown) {
                             console.error('Error:', textStatus, errorThrown);

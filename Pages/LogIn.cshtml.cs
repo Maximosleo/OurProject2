@@ -67,7 +67,7 @@ namespace OurProject2.Pages
             DataTableData dataTableData = globalDataTable.DataTableData;
             foreach (var rowData in dataTableData.Rows)
             {
-                Console.WriteLine($"ID: {rowData.ID},Name: {rowData.Name} LastName: {rowData.lastname}, Enail: {rowData.email}, Password: {rowData.password}, Gender: {rowData.gender}, Age: {rowData.age}, user/admin?: {rowData.admin_user}");
+                Console.WriteLine($"ID: {rowData.ID},Name: {rowData.Name} LastName: {rowData.lastname}, Enail: {rowData.email}, Password: {rowData.password}, Gender: {rowData.gender}, Age: {rowData.age}, user/admin?: {rowData.isAdmin}");
             }
         }
     }
