@@ -32,8 +32,8 @@ namespace OurProject2.Pages
                
                 SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin);
 
-                var sucess = "sucess";
-                var result = new { sucess, isAdmin};
+                var success = true;
+                var result = new { success, isAdmin};
                 var jsonResult = new JsonResult(result);
                 return jsonResult;
             }
@@ -45,20 +45,7 @@ namespace OurProject2.Pages
         }
 
 
-/*        public IActionResult OnGet(string input1, string input2, string input3)
-        {
-            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
-            {
 
-                var result = new { input1, input2, input3 };
-                Console.WriteLine($"Input1: {input1}, Input2: {input2}, Input3: {input3}");
-                return new JsonResult(result);
-            }
-            else
-            {
-                return Page();
-            }
-        }*/
 
         private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification, bool isAdmin)
         {

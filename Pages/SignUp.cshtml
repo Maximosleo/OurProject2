@@ -137,7 +137,21 @@
                     "&age=" + $("#age").val() + "&identification=" + $("#identification").val() + "&admin_user=" + $('input[name="admin_user"]:checked').val(),
                 function (data) {
                     console.log('Server response object:', data);
-                        $("#responseLabel").text(data.stam);
+                            $("#responseLabel").text(data.isAdmin);
+                            var isSuccess = data.success;
+                    var isAdmin = data.isAdmin;
+                        if (isSuccess === true){
+                            if (isAdmin === true){
+                                window.location.href = "/Admin";
+                            }
+                            else{
+                                window.location.href = "/UserHome";
+                            }
+                        }
+                       
+                              
+                            
+                        
                 })
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         console.error('Error:', textStatus, errorThrown);
@@ -195,7 +209,7 @@
            }
             
         }
-        /////itay code
+       
         function CheckCheckBox() {
             flag = false
             atractions = document.getElementsByName("CONPENY CAR")
@@ -206,7 +220,7 @@
             }
             return flag
         }
-        ////itay code
+     
         function CheckCheckradio() {
             flag = false
             atractions = document.getElementsByName("gender")
