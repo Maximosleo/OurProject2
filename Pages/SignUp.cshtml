@@ -71,7 +71,7 @@
      <td>
         <h5> <label> Where Are You Living By Areas </label><br /></h5>
         <select id="living area">
-        <option value="living in israel 1">LEIVING AREA IN ISRAEL</option>
+        <option value="living in israel 1"></option>
         <option>CENTER OF THE ISRAEL</option>
         <option >NORTH OF ISRAEL</option>
         <option>SOUTH OF ISRAEL</option>
@@ -115,6 +115,9 @@
 <tr>
     <td>
     <p id="responseLabel"></p>
+                <label id="label1"></label>
+                <label id="label2"></label>
+                <label id="label3"></label>
     </td>
 </tr>
  </table>
@@ -123,53 +126,27 @@
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+
         $(document).ready(function () {
             $(document).on('submit', '#signupForm', function (event) {
+                event.preventDefault();
 
-                var isCorrect = isInputCorrect($("#firstname").val(), $("#lastname").val(), $("#email").val(),
-                    $("#password").val(), $('input[name="gender"]:checked').val(), $("#age").val(), $("#identification").val());
-
-                console.log(' isCorrect:', isCorrect);
-
-                if (isCorrect == true) {
-                    event.preventDefault();
-
-                    $.get("/SignUp?firstname=" + $("#firstname").val() + "&lastname=" +
+                $.get("/SignUp?firstname=" + $("#firstname").val() + "&lastname=" +
                     $("#lastname").val() + "&email=" + $("#email").val()
-                        + "&password=" + $("#password").val() + "&gender=" + $('input[name="gender"]:checked').val() +
-                        "&age=" + $("#age").val() + "&identification=" + $("#identification").val() + "&admin_user=" + $('input[name="admin_user"]:checked').val(),
-                        function (data) {
-                            //console.log(' response object:', data);
-                            //$("#responseLabel").text(data);
+                    + "&password=" + $("#password").val() + "&gender=" + $('input[name="gender"]:checked').val() +
+                    "&age=" + $("#age").val() + "&identification=" + $("#identification").val() + "&admin_user=" + $('input[name="admin_user"]:checked').val(),
+                function (data) {
+                    console.log('Server response object:', data);
+                        $("#responseLabel").text(data.stam);
+                })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                    });
 
-                            //// read from the json
-                            //console.log(data.isAdmin);
-
-                            //console.log('response object:', data);
-                            //$("#responseLabel").text(data.message);
-                            //console.log(data.isAdmin);  // access 'isAdmin' property
-
-                            var jsonData = JSON.parse(data);
-                            console.log('Parsed JSON:', jsonData);
-                            console.log('isAdmin:', jsonData.isAdmin1);  // Access 'isAdmin' property
-                            console.log('message:', jsonData.message);
-
-                            $("#responseLabel").text(data.message);
-
-
-                        })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                            console.error('Error:', textStatus, errorThrown);
-                        });
-                }
-                else{
-                    alert("shit input11")
-                }
-                
-                    
                 return false;
             });
         });
+
 
         function isInputCorrect(firstname, lastname, email, password, gender, age, identification) {
 
@@ -213,26 +190,6 @@
                 return false;
             }
 
-            //else if (checkcheckbox() == false) {
-            //    return false;
-            //}
-
-
-            //else if (checkcheckradio() == false) {
-            //    return false;
-            ////}
-
-            //else if (document.getelementbyid('living area').val() = 'living in israel 1') {
-            //    return false;
-            //}
-
-            //if $('living area').value == "living in israel 1") {
-            //    document.getElementById("AreaErorr").innerHTML = "חובה למלא אזור במדינה";
-            //    document.getElementById("AreaErorr").style.display = 'inline';
-            //    return false;
-            //}
-
-
             else {
                return true;
            }
@@ -260,10 +217,6 @@
             }
             return flag
         }
-
-       // kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-       //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-
 
         function isValidEmail(email) {
             return email.includes('@@');

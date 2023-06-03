@@ -29,3 +29,12 @@ obj/Debug/net6.0/OurProject2.dll
 obj/Debug/net6.0/OurProject2.csproj.CoreCompileInputs.cache
 bin/Debug/net6.0/OurProject2.pdb
 bin/Debug/net6.0/OurProject2.dll
+obj/Debug/net6.0/refint/OurProject2.dll
+obj/Debug/net6.0/refint/OurProject2.dll
+obj/Debug/net6.0/ref/OurProject2.dll
+obj/Debug/net6.0/OurProject2.pdb
+obj/Debug/net6.0/OurProject2.dll
+bin/Debug/net6.0/OurProject2.pdb
+bin/Debug/net6.0/OurProject2.dll
+*.dll
+obj/Debug/net6.0/refint/OurProject2.dll
