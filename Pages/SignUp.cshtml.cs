@@ -29,6 +29,9 @@ namespace OurProject2.Pages
                 {
                     isAdmin = false;
                 }
+
+                // TODO 
+              //  check if email is exist already in DB
                
                 SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin);
 

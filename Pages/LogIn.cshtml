@@ -35,6 +35,20 @@
                         function (data) {
                             console.log(' response object:', data);
                             $("#responseLabel").text(data);
+                            var isSuccess = data.success
+                            var isAdmin = data.isAdmin;
+                            if(isSuccess === true){
+                                if(isAdmin === true){
+                                    window.location.href = "/Admin";
+                                }
+                                else{
+                                    window.location.href = "/UserHome";
+                                }
+                            }
+
+
+
+
                         })
                         .fail(function (jqXHR, textStatus, errorThrown) {
                             console.error('Error:', textStatus, errorThrown);
