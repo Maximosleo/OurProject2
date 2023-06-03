@@ -2,3 +2,13 @@
 @model OurProject2.Pages.AdminModel
 @{
 }
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var session = urlParams.get('number');
+
+        console.log(session);
+    </script>
+}

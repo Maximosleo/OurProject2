@@ -2,8 +2,10 @@
 @model OurProject2.Pages.TestModel
 @{
 }
+
 <div class="text-center">
 
+   
     <h2>Question:</h2>
     <p id="question_id"></p>
 
@@ -24,10 +26,17 @@
     <button id="next">Next</button>
     <button id="check" class="invisible11">check</button>
     <p><a id="resultLink" href="" class="invisible11">Go to the ResultsTest Page</a></p>
+
+
 </div>
 
 
 <script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var session = urlParams.get('number');
+
+    console.log(session);
+
     class Question {
         // Qustion =שם המחלקה
         title;

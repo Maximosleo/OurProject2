@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
@@ -33,10 +34,17 @@ namespace OurProject2.Pages
                 // TODO 
                 //  check if email is exist already in DB
 
-                MyDAO.GetInstance(_cache11).SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin);
+                MyDAO.GetInstance(_cache11).SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin, -99);
+
+                Random random11 = new Random();
+                int session = random11.Next(1, 1000000);
+
+                //  var session = _cache11.GetOrCreate(session, entry => "");
+                _cache11.Set(session, email);
+
 
                 var success = true;
-                var result = new { success, isAdmin};
+                var result = new { success, isAdmin, session };
                 var jsonResult = new JsonResult(result);
                 return jsonResult;
             }

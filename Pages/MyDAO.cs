@@ -25,13 +25,13 @@ namespace OurProject2.Pages
         }
 
         //save the data
-        public void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification, bool isAdmin)
+        public void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification, bool isAdmin, int score)
         {
             var tableJson = _cache11.GetOrCreate("DB", entry => "");
             GlobalDataTable globalDataTable = GlobalDataTable.DeserializeFromJson(tableJson);
 
             DataTableData dataTableData = globalDataTable.DataTableData;
-            dataTableData.Rows.Add(new RowData { ID = identification, Name = firstname, lastname = lastname, email = email, password = password, gender = gender, age = age, isAdmin = isAdmin });
+            dataTableData.Rows.Add(new RowData { ID = identification, Name = firstname, lastname = lastname, email = email, password = password, gender = gender, age = age, isAdmin = isAdmin , score = score});
 
             var tJson = globalDataTable.SerializeToJson();
             _cache11.Set("DB", tJson);
