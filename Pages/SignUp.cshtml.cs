@@ -31,9 +31,9 @@ namespace OurProject2.Pages
                 }
 
                 // TODO 
-              //  check if email is exist already in DB
-               
-                SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin);
+                //  check if email is exist already in DB
+
+                MyDAO.GetInstance(_cache11).SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin);
 
                 var success = true;
                 var result = new { success, isAdmin};
@@ -50,16 +50,6 @@ namespace OurProject2.Pages
 
 
 
-        private void SaveToDB(string firstname, string lastname, string email, string password, string gender, string age, string identification, bool isAdmin)
-        {
-            var tableJson = _cache11.GetOrCreate("DB", entry => "");
-            GlobalDataTable globalDataTable = GlobalDataTable.DeserializeFromJson(tableJson);
 
-            DataTableData dataTableData = globalDataTable.DataTableData;
-            dataTableData.Rows.Add(new RowData { ID = identification, Name = firstname, lastname = lastname, email = email, password = password, gender = gender, age = age, isAdmin = isAdmin });
-
-            var tJson = globalDataTable.SerializeToJson();
-            _cache11.Set("DB", tJson);
-        }
     }
 }
