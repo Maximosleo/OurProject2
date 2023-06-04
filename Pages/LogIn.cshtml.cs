@@ -24,6 +24,7 @@ namespace OurProject2.Pages
             {
                 bool check = MyDAO.GetInstance(_cache).CheckUser(email, password);
 
+
                 //    ReadData(email, password);
 
                 if(check == true) {
@@ -31,10 +32,19 @@ namespace OurProject2.Pages
                   
                     bool isAdmin = MyDAO.GetInstance(_cache).CheckAdmin(email);
 
+                    Random random11 = new Random();
+                int session = random11.Next(1, 1000000);
+
+                //  var session = _cache11.GetOrCreate(session, entry => "");
+                _cache.Set(session, email);
+
+
+
                     var success = true;
-                    var result = new { success, isAdmin };
+                    var result = new { success, isAdmin,session };
                     var jsonResult = new JsonResult(result);
                     return jsonResult;
+
 
                 }
                 else
@@ -44,6 +54,7 @@ namespace OurProject2.Pages
                     var jsonResult = new JsonResult(result);
                     return jsonResult;
                 }
+
 
 
 

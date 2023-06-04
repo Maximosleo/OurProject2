@@ -37,12 +37,13 @@
                             $("#responseLabel").text(data);
                             var isSuccess = data.success
                             var isAdmin = data.isAdmin;
+                            var session = data.session;
                             if(isSuccess === true){
                                 if(isAdmin === true){
-                                    window.location.href = "/Admin";
+                                    window.location.href = "/Admin?number=" + session;
                                 }
                                 else{
-                                    window.location.href = "/UserHome";
+                                    window.location.href = "/UserHome?number=" + session;
                                 }
                             }
 
