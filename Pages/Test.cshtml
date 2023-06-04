@@ -33,7 +33,7 @@
 
 <script>
     var urlParams = new URLSearchParams(window.location.search);
-    var session = urlParams.get('number');
+    var session = urlParams.get('session');
 
     console.log(session);
 
@@ -64,7 +64,8 @@
     var checkButton = document.getElementById("check");
     var link = document.getElementById("resultLink");
 
-
+    var params11 = new URLSearchParams(window.location.search);
+    var session = params11.get('session');
 
     var currentIndex = 0;
     var correctAnswers = 0;
@@ -96,7 +97,7 @@
         if (currentIndex == array11.length) {
             // make it visible
             link.classList.remove("invisible11");
-            link.href = "/ResultsTest?value=" + correctAnswers;
+            link.href = "/ResultsTest?correctAnswers=" + correctAnswers + "&session=" + session;
         }
         else {
             updateUI11(currentIndex);
@@ -107,8 +108,7 @@
     checkButton.addEventListener("click", function () {
         //  alert(correctAnswers);
         var someValue = "dynamicValue";  // Update this variable as needed
-        link.href = "/ResultsTest?value=" + correctAnswers;
-
+        link.href = "/ResultsTest?correctAnswers=" + correctAnswers + "&session=" + session;
     });
 
     // when the page starts

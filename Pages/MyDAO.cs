@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace OurProject2.Pages
 {
@@ -87,5 +88,38 @@ namespace OurProject2.Pages
             return false;
         }
 
+        public void UpdateScore(string email, string score)
+        {
+            var tableJson = _cache11.GetOrCreate("DB", entry => "");
+            GlobalDataTable globalDataTable = GlobalDataTable.DeserializeFromJson(tableJson);
+
+            DataTableData dataTableData = globalDataTable.DataTableData;
+
+            for (var i = 0; i < dataTableData.Rows.Count; i++)
+            {
+                var rowData = dataTableData.Rows[i];
+                if (rowData.email.Equals(email))
+                {
+                    // turn string to int
+                    int scoreInt = int.Parse(score);
+                    rowData.score = scoreInt;
+                }
+            }
+
+            var tJson = globalDataTable.SerializeToJson();
+            _cache11.Set("DB", tJson);
+        }
+
+        public void PrintData()
+        {
+            DataTableData dataTableData = GetTable();
+
+            for (var i = 0; i < dataTableData.Rows.Count; i++)
+            {
+                var rowData = dataTableData.Rows[i];
+                Console.WriteLine(rowData.score);
+                Console.WriteLine(rowData.email);
+            }
+        }
     }
 }

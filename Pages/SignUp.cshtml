@@ -6,6 +6,10 @@
 @*<table> <tr> </tr></table>
  <td> </td>*@
 
+@section Styles {
+   
+}
+
 <form id="signupForm" action="javascript:void(0);">
 
     <div class="container">
@@ -16,7 +20,7 @@
                 <tr>
                     <td> FIRST NAME:</td>
                     <td>
-                        <input type="text" id="firstname" placeholder="first name" value="Default " />
+                        <input type="text" id="firstname"   placeholder="first name" value="Default" />
                     </td>
                 </tr>
                 <tr>
@@ -58,7 +62,7 @@
     
     <tr>
     <td>
-    <br /> <h5> <label> Gender: </label><br /></h5>
+    <br /> <h5> <label class="invisible11"> Gender: </label><br /></h5>
     <input type="radio" id="male" name="gender" value="male">
     <label for="gender">Male</label><br>
     <input type="radio" id="female" name="gender" value="female">
@@ -143,10 +147,10 @@
                         var session = data.session;
                         if (isSuccess === true){
                             if (isAdmin === true){
-                                window.location.href = "/Admin?number=" + session;
+                                window.location.href = "/Admin?session=" + session;
                             }
                             else{
-                                window.location.href = "/UserHome?number=" + session;
+                                window.location.href = "/UserHome?session=" + session;
                             }
                         }
                        

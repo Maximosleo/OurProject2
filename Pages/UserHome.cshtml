@@ -24,9 +24,9 @@
     <script>
         $(document).ready(function () {
             var urlParams = new URLSearchParams(window.location.search);
-            var session = urlParams.get('number');
+            var session = urlParams.get('session');
             var testLink = document.getElementById('testLink');
-            testLink.href = '/Test?number=' + session;
+            testLink.href = '/Test?session=' + session;
         });
     </script>
 

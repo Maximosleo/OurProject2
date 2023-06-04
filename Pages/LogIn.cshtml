@@ -12,9 +12,6 @@
 </form>
 
 
-
-
-
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
@@ -30,8 +27,10 @@
                 if (isCorrect == true) {
                     event.preventDefault();
 
+                    // 1 client call the server
                     $.get("/LogIn?email=" + $("#email").val() + "&password=" +
                         $("#password").val(),
+                        // 3 clent get responce from server
                         function (data) {
                             console.log(' response object:', data);
                             $("#responseLabel").text(data);
@@ -40,10 +39,10 @@
                             var session = data.session;
                             if(isSuccess === true){
                                 if(isAdmin === true){
-                                    window.location.href = "/Admin?number=" + session;
+                                    window.location.href = "/Admin?session=" + session;
                                 }
                                 else{
-                                    window.location.href = "/UserHome?number=" + session;
+                                    window.location.href = "/UserHome?session=" + session;
                                 }
                             }
 

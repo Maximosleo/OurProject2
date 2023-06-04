@@ -6,6 +6,7 @@ using System.Reflection;
 using System.IO;
 using System.Data;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace OurProject2.Pages
 {
@@ -18,6 +19,8 @@ namespace OurProject2.Pages
         {
             _cache = cache;
         }
+
+        // 2 server called by client
         public IActionResult OnGet(string email, string password)
         {
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
@@ -32,20 +35,14 @@ namespace OurProject2.Pages
                   
                     bool isAdmin = MyDAO.GetInstance(_cache).CheckAdmin(email);
 
-                    Random random11 = new Random();
-                int session = random11.Next(1, 1000000);
+                    string session = GenerateRandomString(8); // Generate a random string for the session key
 
-                //  var session = _cache11.GetOrCreate(session, entry => "");
-                _cache.Set(session, email);
-
-
+                    _cache.Set(session, email);
 
                     var success = true;
                     var result = new { success, isAdmin,session };
                     var jsonResult = new JsonResult(result);
                     return jsonResult;
-
-
                 }
                 else
                 {
@@ -54,10 +51,6 @@ namespace OurProject2.Pages
                     var jsonResult = new JsonResult(result);
                     return jsonResult;
                 }
-
-
-
-
             }
             else
             {
@@ -65,11 +58,7 @@ namespace OurProject2.Pages
             }
 
 
-        }
-
-
-
-      
+        }   
 
         private void ReadData(string email, string password)
         {
@@ -80,6 +69,21 @@ namespace OurProject2.Pages
             {
                 Console.WriteLine($"ID: {rowData.ID},Name: {rowData.Name} LastName: {rowData.lastname}, Enail: {rowData.email}, Password: {rowData.password}, Gender: {rowData.gender}, Age: {rowData.age}, user/admin?: {rowData.isAdmin}");
             }
+        }
+
+        private string GenerateRandomString(int length)
+        {
+            var _random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = _random.Next(chars.Length);
+                builder.Append(chars[index]);
+            }
+
+            return builder.ToString();
         }
     }
     

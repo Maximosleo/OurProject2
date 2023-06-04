@@ -2,35 +2,49 @@
 @model OurProject2.Pages.ResultsTestModel
 @{
 }
-<div class="text-center">
-	<h1>Results Page</h1>
-	<p id="result"></p>
-	<p id="response"></p>
-</div>
 
 
-@*jajvaava scsrciptript*@
-
-<script>
-	var params11 = new URLSearchParams(window.location.search);
-	var value11 = params11.get('value'); // this will be 'someValue'
-	var headline11 = document.getElementById('result');
-
-	headline11.innerText = 'The value is: ' + value11;
-	//////////
-
-	var headline12 = document.getElementById('response');
-
-	if (value11 >= 3) {
-		headline12.innerText = 'You Did Good '
-
-	}
-	else {
-
-		headline12.innerText = 'You Failed Your Test ';
-	}
+<form id="resultForm" action="javascript:void(0);">
+    <h1>Results Page</h1>
+    <p id="result"></p>
+    <p id="response"></p>
+    <button type="submit">Finish (:</button>
+</form>
 
 
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var params11 = new URLSearchParams(window.location.search);
+            var score = params11.get('correctAnswers');
+            var session = params11.get('session');
+
+            console.log(' score:', score);
+            var headline11 = document.getElementById('result');
+            headline11.innerText = 'Your Score: ' + score + "/5" + "session: " + session;
+
+            var headline12 = document.getElementById('response');
+            if (score >= 3) {
+                headline12.innerText = 'You Did Good';
+            } else {
+                headline12.innerText = 'You Failed Your Test';
+            }
+
+            $(document).on('submit', '#resultForm', function (event) {
+                event.preventDefault();
+                $.get("/ResultsTest?session=" + session.toString() + "&score=" + score.toString(),
+                    function (data) {
+                        console.log(' response object:', data);
+                        $("#response").text(data);
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                    });
+                return false;
+            });
+        });
 
 
-</script>
+    </script>
+}

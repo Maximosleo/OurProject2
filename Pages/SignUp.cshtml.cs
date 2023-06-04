@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
+using System.Text;
+using System;
 
 namespace OurProject2.Pages
 {
@@ -36,8 +38,7 @@ namespace OurProject2.Pages
 
                 MyDAO.GetInstance(_cache11).SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin, -99);
 
-                Random random11 = new Random();
-                int session = random11.Next(1, 1000000);
+                string session = GenerateRandomString(8); // Generate a random string for the session key
 
                 //  var session = _cache11.GetOrCreate(session, entry => "");
                 _cache11.Set(session, email);
@@ -53,6 +54,21 @@ namespace OurProject2.Pages
             {
                 return Page();
             }
+        }
+
+        private string GenerateRandomString(int length)
+        {
+            var _random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < length; i++)
+            {
+                int index = _random.Next(chars.Length);
+                builder.Append(chars[index]);
+            }
+
+            return builder.ToString();
         }
 
 
