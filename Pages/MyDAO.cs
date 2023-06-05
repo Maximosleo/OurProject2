@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using static System.Formats.Asn1.AsnWriter;
 
+using System.Data.SQLite;
+
+
 namespace OurProject2.Pages
 {
     public class MyDAO
@@ -120,6 +123,54 @@ namespace OurProject2.Pages
                 Console.WriteLine(rowData.score);
                 Console.WriteLine(rowData.email);
             }
+        }
+
+        public void CreateTable()
+        {
+            string cs = "Data Source=MyDatabase.db";
+
+            using var con = new SQLiteConnection(cs);
+            con.Open();
+
+            using var cmd = new SQLiteCommand(con);
+
+            //firstname, lastname, email, password, gender, age, identification, isAdmin, -99
+
+            // Create a new table
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS MyTable (Id INTEGER PRIMARY KEY, First_name TEXT,Last_name TEXT,Email TEXT, Password TEXT,Gender TEXT, Age INTEGER,Identification TEXT, Score INTEGER ,Living_Area TEXT, Company_Car TEXT )";
+            cmd.ExecuteNonQuery();
+
+            con.Close();
+        }
+
+        public void DoSQL()
+        {
+            string cs = "Data Source=MyDatabase.db";
+
+            using var con = new SQLiteConnection(cs);
+            con.Open();
+
+            using var cmd = new SQLiteCommand(con);
+
+            // Create a new table
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS MyTable (Id INTEGER PRIMARY KEY, Name TEXT)";
+            cmd.ExecuteNonQuery();
+
+            // Insert a row into the table
+            cmd.CommandText = @"INSERT INTO MyTable (Name) VALUES ('Sample Name')";
+            cmd.ExecuteNonQuery();
+
+            // Select all rows from the table
+            cmd.CommandText = @"SELECT * FROM MyTable";
+
+            using SQLiteDataReader rdr = cmd.ExecuteReader();
+
+            while (rdr.Read())
+            {
+                Console.WriteLine($"{rdr.GetInt32(0)}: {rdr.GetString(1)}");
+            }
+
+            con.Close();
         }
     }
 }

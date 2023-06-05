@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Caching.Memory;
 using System.Text;
 using System;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace OurProject2.Pages
 {
@@ -17,26 +18,37 @@ namespace OurProject2.Pages
             _cache11 = cache;
         }
         public IActionResult OnGet(string firstname, string lastname, string email,
-            string password, string gender, string age,string identification, string admin_user)
+            string password, string gender, string age,string identification, string admin_user, String livingArea, String[] companyCars)
         {
             // Set response
             // if this code is called from a button click in the client
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                bool isAdmin;
+        //        MyDAO2.GetInstance().DeleteTable(); /////////////////////***************************************************************
+
+                MyDAO2.GetInstance().CreateTable();
+
+
+           //     SaveToDB(string firstname, string lastname, string email, string password, string gender,
+           //string age, string identification, bool isAdmin, int score, String companyCar, String livingArea)
+
+
+
+                int isAdmin;
                 if (admin_user == "admin")
                 {
-                    isAdmin = true;
+                    isAdmin = 1;
                 }
                 else
                 {
-                    isAdmin = false;
+                    isAdmin = 0;
                 }
 
                 // TODO 
                 //  check if email is exist already in DB
 
-                MyDAO.GetInstance(_cache11).SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin, -99);
+                MyDAO2.GetInstance().SaveToDB(firstname, lastname, email, password, gender, age, identification, isAdmin, -99, "some company car", "some living area");
+                MyDAO2.GetInstance().PrintData();
 
                 string session = GenerateRandomString(8); // Generate a random string for the session key
 

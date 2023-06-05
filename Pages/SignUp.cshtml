@@ -20,13 +20,13 @@
                 <tr>
                     <td> FIRST NAME:</td>
                     <td>
-                        <input type="text" id="firstname"   placeholder="first name" value="Default" />
+                        <input type="text" id="firstname"   placeholder="first name" value="leo" />
                     </td>
                 </tr>
                 <tr>
                     <td> LAST NAME :</td>
                     <td>
-                        <input type="text" id="lastname" placeholder="last name" value="Default First Name" /><br />
+                        <input type="text" id="lastname" placeholder="last name" value="seedes" /><br />
                     </td>
                 </tr>
             </div>
@@ -46,12 +46,12 @@
 
             <tr>
    <td> PASSWORD:</td>
-            <td> <input type="text" id="password" placeholder="password" value="Default First Name" /><br /></td>
+            <td> <input type="text" id="password" placeholder="password" value="1234" /><br /></td>
     </tr>
 
     <tr>
     <td> AGE:</td>
-            <td> <input type="text" id="age" placeholder="age" value=" 0000" /><br /></td>
+            <td> <input type="text" id="age" placeholder="age" value=" 16" /><br /></td>
     </tr>
     <tr>
    <td>  identification:</td>
@@ -135,18 +135,35 @@
             $(document).on('submit', '#signupForm', function (event) {
                 event.preventDefault();
 
+                var livingArea = $("#livingArea").val(); // Get the selected living area value
+                var companyCar = []; // Array to store the selected company car values
+
+                $('input[name="COMPANY CAR"]:checked').each(function () {
+                    companyCar.push($(this).val()); // Add each selected company car to the array
+                });
+
+
+                //$.get("/SignUp?firstname=" + $("#firstname").val() + "&lastname=" +
+                //    $("#lastname").val() + "&email=" + $("#email").val()
+                //    + "&password=" + $("#password").val() + "&gender=" + $('input[name="gender"]:checked').val() +
+                //    "&age=" + $("#age").val() + "&identification=" + $("#identification").val() +
+                //    "&livingArea=" + livingArea + "&companyCar=" + companyCar.join(",") +
+                //    "&admin_user=" + $('input[name="admin_user"]:checked').val(),
+
                 $.get("/SignUp?firstname=" + $("#firstname").val() + "&lastname=" +
                     $("#lastname").val() + "&email=" + $("#email").val()
                     + "&password=" + $("#password").val() + "&gender=" + $('input[name="gender"]:checked').val() +
-                    "&age=" + $("#age").val() + "&identification=" + $("#identification").val() + "&admin_user=" + $('input[name="admin_user"]:checked').val(),
+                    "&age=" + $("#age").val() + "&identification=" + $("#identification").val() + "&admin_user=" +
+                    $('input[name="admin_user"]:checked').val() + "&livingArea=" + livingArea + "&companyCar=" + companyCar.join(","),
                 function (data) {
                     console.log('Server response object:', data);
                             $("#responseLabel").text(data.isAdmin);
                             var isSuccess = data.success;
                     var isAdmin = data.isAdmin;
+                        console.log('isAdmin:', isAdmin);
                         var session = data.session;
                         if (isSuccess === true){
-                            if (isAdmin === true){
+                            if (isAdmin == 1){
                                 window.location.href = "/Admin?session=" + session;
                             }
                             else{

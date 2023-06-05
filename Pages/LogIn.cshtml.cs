@@ -25,7 +25,7 @@ namespace OurProject2.Pages
         {
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                bool check = MyDAO.GetInstance(_cache).CheckUser(email, password);
+                bool check = MyDAO2.GetInstance().CheckUser(email, password);
 
 
                 //    ReadData(email, password);
@@ -60,16 +60,16 @@ namespace OurProject2.Pages
 
         }   
 
-        private void ReadData(string email, string password)
+/*        private void ReadData(string email, string password)
         {
 
-            DataTableData dataTableData = MyDAO.GetInstance(_cache).GetTable();
+            DataTableData dataTableData = MyDAO2.GetInstance().GetTable();
 
             foreach (var rowData in dataTableData.Rows)
             {
                 Console.WriteLine($"ID: {rowData.ID},Name: {rowData.Name} LastName: {rowData.lastname}, Enail: {rowData.email}, Password: {rowData.password}, Gender: {rowData.gender}, Age: {rowData.age}, user/admin?: {rowData.isAdmin}");
             }
-        }
+        }*/
 
         private string GenerateRandomString(int length)
         {

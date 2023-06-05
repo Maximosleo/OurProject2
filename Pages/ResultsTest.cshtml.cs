@@ -21,15 +21,15 @@ namespace OurProject2.Pages
         {
             if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                DoSQL();
+ //               DoSQL();
 
                 // get email is related to this session
                 var email = _cache.Get<string>(session);
 
-                MyDAO.GetInstance(_cache).PrintData();
-                MyDAO.GetInstance(_cache).UpdateScore(email, score);
+                MyDAO2.GetInstance().PrintData();
+                MyDAO2.GetInstance().UpdateScore(email, score);
 
-                MyDAO.GetInstance(_cache).PrintData();
+                MyDAO2.GetInstance().PrintData();
 
                 var success = true;
                 var result = new { success, session };
