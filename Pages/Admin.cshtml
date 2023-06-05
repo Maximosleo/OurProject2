@@ -2,13 +2,76 @@
 @model OurProject2.Pages.AdminModel
 @{
 }
+
+<form  action="javascript:void(0);">
+    <input type="text" id="makeAdmin">
+    <button id="makeAdminButton">Button makeAdmin</button>
+
+    <input type="text" id="makeUser">
+    <button id="makeUserButton">Button makeUser</button>
+
+    <input type="text" id="delete">
+    <button id="deleteButton">Button delete</button>
+
+    <input type="text" id="search">
+    <button id="searchButton">Button search</button>
+</form>
+
+
+
 @section Scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        $(document).ready(function () {
 
-        var urlParams = new URLSearchParams(window.location.search);
-        var session = urlParams.get('session');
 
-        console.log(session);
+
+
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var session = urlParams.get('session');
+
+            console.log(session);
+
+            document.getElementById('makeAdmin').addEventListener('click', function () {
+                sendRequest(document.getElementById('makeAdmin').value, 1, session);
+            });
+
+            document.getElementById('makeUser').addEventListener('click', function () {
+                sendRequest(document.getElementById('makeUser').value, 2, session);
+            });
+
+            document.getElementById('delete').addEventListener('click', function () {
+                sendRequest(document.getElementById('delete').value, 3, session);
+            });
+
+            document.getElementById('search').addEventListener('click', function () {
+                sendRequest(document.getElementById('search').value, 4, session);
+            });
+
+            function sendRequest(email, buttonNumber, sessionValue) {
+
+                console.log('email  ', email);
+                var sessionsStr = sessionValue+"";
+                console.log('sessionValue  ', sessionsStr);
+                console.log('buttonNumber  ', buttonNumber);
+
+
+                // 1 client call the server
+                $.get("/Admin?email=" + email + "&buttonNumber=" +
+                    buttonNumber + "&session=" + sessionValue,
+                    // 3 clent get responce from server
+                    function (data) {
+                        console.log(' response object:', data);
+                     //   $("#responseLabel").text(data);
+                        var isSuccess = data.success
+     
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                    });
+            }
+        });
     </script>
 }
+

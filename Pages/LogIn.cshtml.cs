@@ -33,7 +33,7 @@ namespace OurProject2.Pages
                 if(check == true) {
                     // return Content("signed in sucessfull");
                   
-                    bool isAdmin = MyDAO.GetInstance(_cache).CheckAdmin(email);
+                    bool isAdmin = MyDAO2.GetInstance().CheckAdmin(email);
 
                     string session = GenerateRandomString(8); // Generate a random string for the session key
 
